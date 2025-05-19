@@ -39,6 +39,15 @@ Ever wanted to jump between all instances of a variable, function, or text patte
 
 You can customize the extension's behavior through VS Code settings:
 
+### Accessing Settings
+
+You can access settings in multiple ways:
+
+1. Click the gear icon (⚙️) in the extension view
+2. Click the gear icon in the status bar when using the extension
+3. Use the command palette: `Next Occurrence Across Workspace: Open Settings`
+4. Go to File > Preferences > Settings and search for "Next Occurrence"
+
 ### Exclude Patterns
 
 Specify directories to exclude from search using glob patterns:

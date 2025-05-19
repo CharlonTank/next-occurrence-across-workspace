@@ -3,7 +3,11 @@ description:
 globs: 
 alwaysApply: true
 ---
-Before publishing a new version, npm run compile then run "code --new-window --extensionDevelopmentPa
-th=$(pwd) ../tmp" using the extension for me to test.
-
-If we improve the repo, we need to run the tests before publishing.
+CRITICAL WORKFLOW REQUIREMENT: 
+1. ALWAYS test changes before committing/pushing
+2. NEVER commit or push without my explicit approval
+3. For testing:
+   a. First run: npm run compile
+   b. Then run: code --new-window --extensionDevelopmentPath=$(pwd) ../tmp
+   c. WAIT for my confirmation that it works
+4. Only after I explicitly confirm the test works, proceed with git operations

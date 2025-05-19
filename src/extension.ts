@@ -16,6 +16,14 @@ export function activate(context: vscode.ExtensionContext) {
 	const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
 	context.subscriptions.push(statusBarItem);
 
+	// Create a settings status bar button
+	const settingsStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
+	settingsStatusBarItem.text = "$(gear)";
+	settingsStatusBarItem.tooltip = "Next Occurrence Across Workspace Settings";
+	settingsStatusBarItem.command = "next-occurence-across-workspace.openSettings";
+	settingsStatusBarItem.show();
+	context.subscriptions.push(settingsStatusBarItem);
+
 	// Keep track of the current search
 	let occurrences: OccurrenceLocation[] = [];
 	let currentIndex = -1;
@@ -33,13 +41,19 @@ export function activate(context: vscode.ExtensionContext) {
 		const escapedText = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 		
 		try {
-			// Get exclude patterns from configuration
+			// Get configuration settings
 			const config = vscode.workspace.getConfiguration('nextOccurenceAcrossWorkspace');
-			const excludePatterns = config.get<string[]>('excludePatterns', [
-				"**/node_modules/**",
-				"**/dist/**",
-				"**/out/**"
-			]);
+			
+			// Get exclude directories as an object
+			const excludeDirectoriesObj = config.get<Record<string, string>>('excludeDirectories', {
+				nodeModules: "**/node_modules/**",
+				dist: "**/dist/**",
+				out: "**/out/**"
+			});
+			
+			// Convert exclude directories object to an array of patterns
+			const excludePatterns = Object.values(excludeDirectoriesObj);
+			
 			const includeHiddenFiles = config.get<boolean>('includeHiddenFiles', false);
 			
 			// Create the exclude pattern string
@@ -60,7 +74,9 @@ export function activate(context: vscode.ExtensionContext) {
 				try {
 					const document = await vscode.workspace.openTextDocument(fileUri);
 					const content = document.getText();
-					const regex = new RegExp(escapedText, 'gi'); // Using 'i' flag for case-insensitive matching
+					
+					// Use case-insensitive search
+					const regex = new RegExp(escapedText, 'gi');
 					
 					let match;
 					while ((match = regex.exec(content)) !== null) {
@@ -215,7 +231,13 @@ export function activate(context: vscode.ExtensionContext) {
 		await navigateToOccurrence(occurrence);
 	});
 
-	context.subscriptions.push(nextDisposable, prevDisposable);
+	// Register command to open settings
+	const settingsDisposable = vscode.commands.registerCommand('next-occurence-across-workspace.openSettings', () => {
+		// Open the settings UI focused on this extension's settings
+		vscode.commands.executeCommand('workbench.action.openSettings', 'nextOccurenceAcrossWorkspace');
+	});
+
+	context.subscriptions.push(nextDisposable, prevDisposable, settingsDisposable);
 	context.subscriptions.push(statusBarItem);
 }
 

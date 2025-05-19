@@ -2,6 +2,12 @@
 
 All notable changes to the "next-occurence-across-workspace" extension will be documented in this file.
 
+## [0.0.10] - 2024-07-12
+
+- ⚙️ Added UI-based settings access through extension view and status bar
+- 🖱️ Added context menu items for finding occurrences
+- 🛠️ Added command palette entry for opening settings
+
 ## [0.0.9] - 2024-07-11
 
 - ⚙️ Added configurable directory exclusion patterns

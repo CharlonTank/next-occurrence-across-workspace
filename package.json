@@ -2,7 +2,7 @@
   "name": "next-occurence-across-workspace",
   "displayName": "Next Occurrence Across Workspace",
   "description": "Jump to the next occurrence of selected text across your workspace",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "publisher": "charlontank",
   "icon": "logo.jpg",
   "repository": {
@@ -28,8 +28,40 @@
       {
         "command": "next-occurence-across-workspace.findPreviousOccurrence",
         "title": "Find Previous Occurrence Across Workspace"
+      },
+      {
+        "command": "next-occurence-across-workspace.openSettings",
+        "title": "Open Next Occurrence Across Workspace Settings",
+        "icon": "$(gear)"
       }
     ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "next-occurence-across-workspace.findNextOccurrence",
+          "group": "navigation",
+          "when": "editorTextFocus && editorHasSelection"
+        },
+        {
+          "command": "next-occurence-across-workspace.findPreviousOccurrence",
+          "group": "navigation",
+          "when": "editorTextFocus && editorHasSelection"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "next-occurence-across-workspace.openSettings",
+          "when": "true"
+        }
+      ],
+      "extension/title": [
+        {
+          "command": "next-occurence-across-workspace.openSettings",
+          "group": "navigation",
+          "when": "extensionId == 'charlontank.next-occurence-across-workspace'"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "next-occurence-across-workspace.findNextOccurrence",
@@ -47,25 +79,43 @@
     "configuration": {
       "title": "Next Occurrence Across Workspace",
       "properties": {
-        "nextOccurenceAcrossWorkspace.excludePatterns": {
-          "type": "array",
-          "default": [
-            "**/node_modules/**",
-            "**/dist/**",
-            "**/out/**",
-            "**/.git/**",
-            "**/bower_components/**",
-            "**/build/**",
-            "**/.next/**",
-            "**/.vscode/**"
-          ],
-          "description": "Glob patterns for directories to exclude from search."
+        "nextOccurenceAcrossWorkspace.excludeDirectories": {
+          "type": "object",
+          "default": {
+            "nodeModules": "**/node_modules/**",
+            "dist": "**/dist/**",
+            "out": "**/out/**",
+            "git": "**/.git/**",
+            "bowerComponents": "**/bower_components/**",
+            "build": "**/build/**",
+            "nextjs": "**/.next/**",
+            "vscode": "**/.vscode/**"
+          },
+          "description": "Directories to exclude from search.",
+          "scope": "window",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "patternProperties": {
+            "^.*$": {
+              "type": "string",
+              "description": "A glob pattern to exclude"
+            }
+          }
         },
         "nextOccurenceAcrossWorkspace.includeHiddenFiles": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to include hidden files in search."
+          "description": "Include hidden files.",
+          "scope": "window"
         }
+      }
+    },
+    "configurationDefaults": {
+      "[markdown]": {
+        "editor.formatOnSave": true,
+        "editor.renderWhitespace": "all",
+        "editor.acceptSuggestionOnEnter": "off"
       }
     }
   },
