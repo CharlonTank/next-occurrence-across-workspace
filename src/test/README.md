@@ -30,6 +30,7 @@ The tests are structured as follows:
 ### Activation Test
 
 This test verifies that:
+
 - The extension is present in VS Code
 - The extension can be activated
 - The required commands are registered
@@ -37,6 +38,7 @@ This test verifies that:
 ### Case-insensitive Search Test
 
 This test examines the extension's source code to verify:
+
 - The regular expression used for searching includes the 'i' flag for case-insensitivity
 - The comparison for determining if search text has changed uses case-insensitive comparison (toLowerCase)
 
@@ -49,4 +51,4 @@ The test suite could be expanded to include:
 3. Testing the "findPreviousOccurrence" command
 4. Testing navigation through multiple occurrences
 5. Testing status bar updates
-6. Performance testing with larger files 
+6. Performance testing with larger files

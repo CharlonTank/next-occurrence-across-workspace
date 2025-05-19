@@ -9,6 +9,17 @@
 
 Ever wanted to jump between all instances of a variable, function, or text pattern across your entire project? This extension makes it simple and fast!
 
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [How to Use](#-how-to-use)
+- [Configuration](#-configuration)
+- [Requirements](#-requirements)
+- [Keyboard Shortcuts](#-keyboard-shortcuts)
+- [Tips](#-tips)
+- [Known Issues](#-known-issues)
+- [Release Notes](#-release-notes)
+
 ## ✨ Features
 
 - 🔎 Jump to the **next occurrence** of selected text with `Alt+F`
@@ -17,6 +28,8 @@ Ever wanted to jump between all instances of a variable, function, or text patte
 - 🔄 Cycle through occurrences automatically - when you reach the end, it loops back to the beginning
 - ⚙️ Configure directories to exclude from search
 - 🔤 Case-insensitive search across all files
+- 🖱️ Right-click context menu integration for finding occurrences
+- ⚡ Fast navigation through large codebases
 
 ## 📋 How to Use
 
@@ -35,6 +48,10 @@ Ever wanted to jump between all instances of a variable, function, or text patte
 
 4. Keep pressing the shortcuts to navigate through all matches
 
+### Demo
+
+![Demo of Next Occurrence Across Workspace extension](show.gif)
+
 ## ⚙️ Configuration
 
 You can customize the extension's behavior through VS Code settings:
@@ -48,22 +65,31 @@ You can access settings in multiple ways:
 3. Use the command palette: `Next Occurrence Across Workspace: Open Settings`
 4. Go to File > Preferences > Settings and search for "Next Occurrence"
 
-### Exclude Patterns
+### Exclude Directories
 
-Specify directories to exclude from search using glob patterns:
+The extension automatically excludes common directories that typically contain generated files, dependencies, or other non-source code content:
 
 ```json
-"nextOccurenceAcrossWorkspace.excludePatterns": [
-  "**/node_modules/**",
-  "**/dist/**",
-  "**/out/**",
-  "**/.git/**",
-  "**/bower_components/**",
-  "**/build/**",
-  "**/.next/**",
-  "**/.vscode/**"
-]
+"nextOccurenceAcrossWorkspace.excludeDirectories": {
+  "nodeModules": "**/node_modules/**",
+  "dist": "**/dist/**",
+  "out": "**/out/**",
+  "git": "**/.git/**",
+  "bowerComponents": "**/bower_components/**",
+  "build": "**/build/**",
+  "nextjs": "**/.next/**",
+  "vscode": "**/.vscode/**",
+  "elmStuff": "**/elm-stuff/**",
+  "coverage": "**/coverage/**",
+  "target": "**/target/**",
+  "temp": "**/temp/**",
+  "tmp": "**/tmp/**",
+  "cache": "**/.cache/**",
+  "logs": "**/logs/**"
+}
 ```
+
+You can customize this list in your settings.
 
 ### Hidden Files
 
@@ -106,6 +132,9 @@ You can customize these in your keybindings.json file:
 - Works seamlessly with code, comments, strings, and any text content
 - Great for refactoring when you need to check all instances of a function or variable
 - Use it to navigate through code patterns or repeated text
+- For large workspaces, be specific with your selection to reduce the number of matches
+- Use context menu options by right-clicking on selected text
+- When navigating between matches, the status bar shows your current position
 
 ## ⚠️ Known Issues
 
@@ -113,6 +142,14 @@ You can customize these in your keybindings.json file:
 - The search may take longer in large workspaces with many files
 
 ## 📝 Release Notes
+
+### 0.0.9
+
+- 🔍 Added case-insensitive search functionality
+- ⚙️ Improved settings configuration with UI-based controls
+- 🖱️ Added context menu items for finding occurrences
+- 🛠️ Added more default directories to exclude (elm-stuff, coverage, etc.)
+- 📊 Enhanced status bar information
 
 ### 0.0.6
 

@@ -89,7 +89,14 @@
             "bowerComponents": "**/bower_components/**",
             "build": "**/build/**",
             "nextjs": "**/.next/**",
-            "vscode": "**/.vscode/**"
+            "vscode": "**/.vscode/**",
+            "elmStuff": "**/elm-stuff/**",
+            "coverage": "**/coverage/**",
+            "target": "**/target/**",
+            "temp": "**/temp/**",
+            "tmp": "**/tmp/**",
+            "cache": "**/.cache/**",
+            "logs": "**/logs/**"
           },
           "description": "Directories to exclude from search.",
           "scope": "window",
