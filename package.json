@@ -2,14 +2,14 @@
   "name": "next-occurence-across-workspace",
   "displayName": "Next Occurrence Across Workspace",
   "description": "Jump to the next occurrence of selected text across your workspace",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "charlontank",
   "repository": {
     "type": "git",
     "url": "https://github.com/CharlonTank/next-occurrence-across-workspace.git"
   },
   "engines": {
-    "vscode": "^1.100.0"
+    "vscode": "^1.60.0"
   },
   "categories": [
     "Other"
@@ -47,7 +47,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.100.0",
+    "@types/vscode": "^1.60.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
