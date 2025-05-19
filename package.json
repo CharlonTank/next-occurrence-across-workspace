@@ -2,9 +2,9 @@
   "name": "next-occurence-across-workspace",
   "displayName": "Next Occurrence Across Workspace",
   "description": "Jump to the next occurrence of selected text across your workspace",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "charlontank",
-  "icon": "logo.png",
+  "icon": "logo.jpg",
   "repository": {
     "type": "git",
     "url": "https://github.com/CharlonTank/next-occurrence-across-workspace.git"
