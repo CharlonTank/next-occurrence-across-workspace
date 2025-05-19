@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 				try {
 					const document = await vscode.workspace.openTextDocument(fileUri);
 					const content = document.getText();
-					const regex = new RegExp(escapedText, 'g');
+					const regex = new RegExp(escapedText, 'gi'); // Using 'i' flag for case-insensitive matching
 					
 					let match;
 					while ((match = regex.exec(content)) !== null) {

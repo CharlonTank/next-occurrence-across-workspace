@@ -3,4 +3,5 @@ description:
 globs: 
 alwaysApply: true
 ---
-Before publishing a new version, npm run compile then open "../tmp" directory for me to test the extension
+Before publishing a new version, npm run compile then run "code --new-window --extensionDevelopmentPa
+th=$(pwd) ../tmp" using the extension for me to test
