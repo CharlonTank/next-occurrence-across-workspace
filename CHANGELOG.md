@@ -4,6 +4,10 @@ All notable changes to the "next-occurence-across-workspace" extension will be d
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.5] - 2024-07-01
+
+- 🎨 Added extension logo
+
 ## [0.0.4] - 2024-07-01
 
 - Added previous occurrence shortcut (Alt+Shift+F) to navigate backwards through occurrences
