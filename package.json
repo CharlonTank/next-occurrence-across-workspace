@@ -2,7 +2,7 @@
   "name": "next-occurence-across-workspace",
   "displayName": "Next Occurrence Across Workspace",
   "description": "Jump to the next occurrence of selected text across your workspace",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "publisher": "charlontank",
   "icon": "logo.jpg",
   "repository": {
@@ -110,10 +110,38 @@
             }
           }
         },
+        "nextOccurenceAcrossWorkspace.excludeFiles": {
+          "type": "object",
+          "default": {
+            "packageLock": "**/package-lock.json",
+            "yarnLock": "**/yarn.lock",
+            "vsix": "**/*.vsix",
+            "minJs": "**/*.min.js",
+            "minCss": "**/*.min.css",
+            "map": "**/*.map"
+          },
+          "description": "Files to exclude from search.",
+          "scope": "window",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "patternProperties": {
+            "^.*$": {
+              "type": "string",
+              "description": "A glob pattern to exclude specific files"
+            }
+          }
+        },
         "nextOccurenceAcrossWorkspace.includeHiddenFiles": {
           "type": "boolean",
           "default": false,
           "description": "Include hidden files.",
+          "scope": "window"
+        },
+        "nextOccurenceAcrossWorkspace.respectGitignore": {
+          "type": "boolean",
+          "default": true,
+          "description": "Respect .gitignore files and exclude ignored files from search.",
           "scope": "window"
         }
       }

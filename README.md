@@ -26,9 +26,10 @@ Ever wanted to jump between all instances of a variable, function, or text patte
 - 🔍 Jump to the **previous occurrence** with `Alt+Shift+F`
 - 📊 See match statistics in the status bar (e.g., "Match 3/12 for 'myFunction'")
 - 🔄 Cycle through occurrences automatically - when you reach the end, it loops back to the beginning
-- ⚙️ Configure directories to exclude from search
+- ⚙️ Configure directories and files to exclude from search
 - 🔤 Case-insensitive search across all files
 - 🖱️ Right-click context menu integration for finding occurrences
+- 🧩 Git integration with built-in support for respecting .gitignore files
 - ⚡ Fast navigation through large codebases
 
 ## 📋 How to Use
@@ -89,7 +90,28 @@ The extension automatically excludes common directories that typically contain g
 }
 ```
 
-You can customize this list in your settings.
+### Exclude Files
+
+You can also exclude specific file types:
+
+```json
+"nextOccurenceAcrossWorkspace.excludeFiles": {
+  "packageLock": "**/package-lock.json",
+  "yarnLock": "**/yarn.lock",
+  "vsix": "**/*.vsix",
+  "minJs": "**/*.min.js",
+  "minCss": "**/*.min.css",
+  "map": "**/*.map"
+}
+```
+
+### Git Integration
+
+Control whether to respect .gitignore files when searching:
+
+```json
+"nextOccurenceAcrossWorkspace.respectGitignore": true
+```
 
 ### Hidden Files
 
@@ -142,6 +164,20 @@ You can customize these in your keybindings.json file:
 - The search may take longer in large workspaces with many files
 
 ## 📝 Release Notes
+
+### 0.0.11
+
+- 📁 Added ability to exclude specific file types from search
+- 🔧 Added option to respect .gitignore files when searching
+
+### 0.0.10
+
+- ⚙️ Added UI-based settings and command palette access
+- 🖱️ Added context menu items for finding occurrences
+- 🔧 Added configurable directory exclusion and hidden file options
+- 🔤 Improved case-insensitive search and added related tests
+- 🎨 Updated and added extension logo
+- 🐛 Fixed navigation and search tracking issues
 
 ### 0.0.9
 

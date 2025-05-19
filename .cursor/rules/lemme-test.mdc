@@ -9,5 +9,5 @@ CRITICAL WORKFLOW REQUIREMENT:
 3. For testing:
    a. First run: npm run compile
    b. Then run: code --new-window --extensionDevelopmentPath=$(pwd) ../tmp
-   c. WAIT for my confirmation that it works
-4. Only after I explicitly confirm the test works, proceed with git operations
+   <<<<<c. WAIT for my confirmation that it works >>>>> THIS IS THE MOST IMPORTANT
+4. ONLY AFTER I explicitly confirm the test works, proceed with git operations and publication.

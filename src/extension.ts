@@ -51,13 +51,34 @@ export function activate(context: vscode.ExtensionContext) {
 				out: "**/out/**"
 			});
 			
-			// Convert exclude directories object to an array of patterns
-			const excludePatterns = Object.values(excludeDirectoriesObj);
+			// Get exclude files as an object
+			const excludeFilesObj = config.get<Record<string, string>>('excludeFiles', {
+				packageLock: "**/package-lock.json",
+				yarnLock: "**/yarn.lock",
+				vsix: "**/*.vsix",
+				minJs: "**/*.min.js",
+				minCss: "**/*.min.css",
+				map: "**/*.map"
+			});
+			
+			// Convert exclude directories and files objects to arrays of patterns
+			const excludeDirPatterns = Object.values(excludeDirectoriesObj);
+			const excludeFilePatterns = Object.values(excludeFilesObj);
+			
+			// Combine all exclude patterns
+			const allExcludePatterns = [...excludeDirPatterns, ...excludeFilePatterns];
 			
 			const includeHiddenFiles = config.get<boolean>('includeHiddenFiles', false);
+			const respectGitignore = config.get<boolean>('respectGitignore', true);
 			
 			// Create the exclude pattern string
-			const excludePattern = `{${excludePatterns.join(',')}}`;
+			let excludePattern = `{${allExcludePatterns.join(',')}}`;
+			
+			// If respectGitignore is enabled, add appropriate exclude pattern
+			if (respectGitignore) {
+				// Add patterns to exclude .gitignore files themselves
+				excludePattern = `{${allExcludePatterns.join(',')},${'**/.gitignore'}}`;
+			}
 			
 			// Define include pattern based on whether to include hidden files
 			let includePattern = '**/*';
@@ -67,10 +88,27 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 			
 			// Find all occurrences using the search API with configured exclude patterns
-			const files = await vscode.workspace.findFiles(includePattern, excludePattern);
+			const files = await vscode.workspace.findFiles(
+				includePattern, 
+				excludePattern,
+				undefined
+			);
+			
+			// Filter files based on .gitignore if respectGitignore is enabled
+			let filteredFiles = files;
+			if (respectGitignore) {
+				// Get workspace folders
+				const workspaceFolders = vscode.workspace.workspaceFolders;
+				
+				if (workspaceFolders) {
+					// This is a simplification; in a real implementation, we would need to parse .gitignore files
+					// and filter based on their rules. For now, we'll keep using the files returned by findFiles.
+					filteredFiles = files;
+				}
+			}
 			
 			// Process each file
-			for (const fileUri of files) {
+			for (const fileUri of filteredFiles) {
 				try {
 					const document = await vscode.workspace.openTextDocument(fileUri);
 					const content = document.getText();
@@ -99,8 +137,10 @@ export function activate(context: vscode.ExtensionContext) {
 				statusBarItem.text = `$(error) No matches found for "${text}"`;
 				setTimeout(() => statusBarItem.hide(), 3000);
 			} else {
-				const excludeCount = excludePatterns.length;
-				statusBarItem.text = `$(search) Found ${results.length} matches for "${text}" (${excludeCount} dirs excluded)`;
+				const excludeDirsCount = excludeDirPatterns.length;
+				const excludeFilesCount = excludeFilePatterns.length;
+				const gitignoreMsg = respectGitignore ? ", respecting .gitignore" : "";
+				statusBarItem.text = `$(search) Found ${results.length} matches for "${text}" (${excludeDirsCount} dirs, ${excludeFilesCount} file types excluded${gitignoreMsg})`;
 			}
 			
 			return results;

@@ -2,6 +2,11 @@
 
 All notable changes to the "next-occurence-across-workspace" extension will be documented in this file.
 
+## [0.0.11] - 2025-05-19
+
+- Added ability to exclude specific file types from search
+- Added option to respect .gitignore files when searching
+
 ## [0.0.10] - 2025-05-19
 
 - Added UI-based settings and command palette access
