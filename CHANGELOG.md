@@ -8,6 +8,7 @@ All notable changes to the "next-occurence-across-workspace" extension will be d
 - Made exclude patterns fully customizable
 - Improved settings UI experience
 - Fixed "Reset Setting" functionality to properly restore default exclude patterns
+- Implemented robust .gitignore support with direct file parsing to properly respect gitignore patterns
 
 ## [0.0.11] - 2025-05-19
 

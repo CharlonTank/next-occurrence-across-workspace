@@ -120,7 +120,7 @@
         "nextOccurenceAcrossWorkspace.respectGitignore": {
           "type": "boolean",
           "default": true,
-          "description": "Respect .gitignore files and exclude ignored files from search.",
+          "description": "Respect .gitignore files when searching. The extension directly parses .gitignore files to exclude matched files and directories.",
           "scope": "window"
         }
       }

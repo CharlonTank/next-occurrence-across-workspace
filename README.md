@@ -29,7 +29,7 @@ Ever wanted to jump between all instances of a variable, function, or text patte
 - ⚙️ Configure directories and files to exclude from search
 - 🔤 Case-insensitive search across all files
 - 🖱️ Right-click context menu integration for finding occurrences
-- 🧩 Git integration with built-in support for respecting .gitignore files
+- 🧩 Robust .gitignore support with direct file parsing
 - ⚡ Fast navigation through large codebases
 
 ## 📋 How to Use
@@ -68,7 +68,7 @@ You can access settings in multiple ways:
 
 ### Exclude Patterns
 
-The extension comes with default exclude patterns for common directories and files, but you can fully customize them:
+Customize which files and directories to exclude from your searches:
 
 ```json
 "nextOccurenceAcrossWorkspace.excludePatterns": [
@@ -80,17 +80,19 @@ The extension comes with default exclude patterns for common directories and fil
 ]
 ```
 
-You can add, remove, or modify patterns as needed. The patterns apply to both directories and files.
+You can add, remove, or modify patterns as needed. The patterns work with both directories and files.
 
 If you want to restore the default settings, you can click the "Reset Setting" button in the settings UI.
 
 ### Git Integration
 
-Control whether to respect .gitignore files when searching:
+The extension provides robust .gitignore support:
 
 ```json
 "nextOccurenceAcrossWorkspace.respectGitignore": true
 ```
+
+When enabled, the extension parses all .gitignore files in your workspace and excludes any matching files from the search. The search status bar shows you how many files were excluded by .gitignore patterns.
 
 ### Hidden Files
 
@@ -143,6 +145,14 @@ You can customize these in your keybindings.json file:
 - The search may take longer in large workspaces with many files
 
 ## 📝 Release Notes
+
+### 0.0.12
+
+- 🔧 Simplified exclude patterns into a single unified array setting
+- ⚙️ Made exclude patterns fully customizable
+- 🐛 Fixed "Reset Setting" functionality to properly restore default patterns
+- 🔍 Implemented robust .gitignore support with direct file parsing
+- 📊 Improved search status information with detailed file counts
 
 ### 0.0.11
 
