@@ -4,9 +4,7 @@ This directory contains tests for the Next Occurrence Across Workspace VS Code e
 
 ## Tests Included
 
-1. **Extension Activation Test**: Verifies that the extension activates properly.
-2. **Command Registration Test**: Checks that the extension registers its commands.
-3. **Case-insensitive Search Test**: Tests that the extension properly finds occurrences of text regardless of case.
+1. **Extension Activation Test**: Verifies that the extension is present and can be activated.
 
 ## Running Tests
 
@@ -24,19 +22,13 @@ If you just want to run the tests without recompiling:
 npm run test
 ```
 
-## Test Structure
+## Future Test Improvements
 
-The tests create a temporary workspace with sample files containing text in different cases. The test then selects a word and uses the extension's commands to find occurrences, verifying that case-insensitive search works properly.
+More comprehensive tests could be added in the future to test:
 
-## Adding New Tests
+1. Command registration
+2. Case-insensitive search functionality 
+3. Navigation between occurrences
+4. Status bar updates
 
-When adding new tests:
-
-1. Add the test in `extension.test.ts`
-2. Make sure to clean up any resources in the `suiteTeardown` function
-3. Run the tests to verify they pass
-
-## Notes
-
-- Tests may need to increase timeout values for long-running operations
-- Some tests create temporary files that are cleaned up after tests run 
+These would require setting up a proper test workspace with sample files. 
