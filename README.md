@@ -1,54 +1,94 @@
-# Next Occurrence Across Workspace
+# 🔍 Next Occurrence Across Workspace
 
-This VS Code extension allows you to quickly navigate to the next occurrence of selected text across your entire workspace. It works similar to the "Find Next" functionality (Cmd+G on Mac, F3 on Windows/Linux) but extends it to work across multiple files.
+[![Version](https://img.shields.io/visual-studio-marketplace/v/charlontank.next-occurence-across-workspace)](https://marketplace.visualstudio.com/items?itemName=charlontank.next-occurence-across-workspace)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/charlontank.next-occurence-across-workspace)](https://marketplace.visualstudio.com/items?itemName=charlontank.next-occurence-across-workspace)
+[![Rating](https://img.shields.io/visual-studio-marketplace/stars/charlontank.next-occurence-across-workspace)](https://marketplace.visualstudio.com/items?itemName=charlontank.next-occurence-across-workspace&ssr=false#review-details)
+[![License](https://img.shields.io/github/license/CharlonTank/next-occurrence-across-workspace)](https://github.com/CharlonTank/next-occurrence-across-workspace/blob/master/LICENSE)
 
-## Features
+> 🚀 **Quickly navigate through all occurrences of selected text across your entire workspace**
 
-- Jump to the next occurrence of selected text across your entire workspace
-- Shows the current match number and total matches in the status bar
-- Continues from the first occurrence when reaching the end of all occurrences
+Ever wanted to jump between all instances of a variable, function, or text pattern across your entire project? This extension makes it simple and fast!
 
-## How to Use
+## ✨ Features
 
-1. Select a piece of text in the editor
-2. Press `Alt+F` (configurable in settings)
-3. The extension will find all occurrences of the selected text across your workspace
-4. Keep pressing `Alt+F` to navigate through all occurrences
-5. When you reach the last occurrence, it will cycle back to the first one
+- 🔎 Jump to the **next occurrence** of selected text with `Alt+F`
+- 🔍 Jump to the **previous occurrence** with `Alt+Shift+F`
+- 📊 See match statistics in the status bar (e.g., "Match 3/12 for 'myFunction'")
+- 🔄 Cycle through occurrences automatically - when you reach the end, it loops back to the beginning
 
-## Requirements
+## 📋 How to Use
 
-- VS Code 1.60.0 or higher
+1. **Select** any text in your editor
+   ```js
+   const myVariable = "Hello World";
+   ```
 
-## Extension Settings
+2. Press `Alt+F` to find the next occurrence or `Alt+Shift+F` for the previous one
 
-This extension contributes the following settings:
+3. The extension will:
+   - Find all matching occurrences across your entire workspace
+   - Show a status indicator with the total number of matches
+   - Navigate to the next/previous occurrence
 
-* `next-occurence-across-workspace.findNextOccurrence`: Find the next occurrence of the selected text across the workspace
+4. Keep pressing the shortcuts to navigate through all matches
 
-## Keybindings
+## 🛠️ Requirements
 
-By default, the extension uses `Alt+F` to navigate to the next occurrence. You can customize this in your keybindings.json file:
+- VS Code 1.95.0 or higher
+
+## ⌨️ Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Find next occurrence | `Alt+F` |
+| Find previous occurrence | `Alt+Shift+F` |
+
+You can customize these in your keybindings.json file:
 
 ```json
-{
-  "key": "alt+f", // Change this to your preferred shortcut
-  "command": "next-occurence-across-workspace.findNextOccurrence",
-  "when": "editorTextFocus"
-}
+[
+  {
+    "key": "alt+f",
+    "command": "next-occurence-across-workspace.findNextOccurrence",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+shift+f",
+    "command": "next-occurence-across-workspace.findPreviousOccurrence",
+    "when": "editorTextFocus"
+  }
+]
 ```
 
-## Known Issues
+## 💡 Tips
+
+- Works seamlessly with code, comments, strings, and any text content
+- Great for refactoring when you need to check all instances of a function or variable
+- Use it to navigate through code patterns or repeated text
+
+## ⚠️ Known Issues
 
 - Binary files and large files might be skipped to improve performance
 - The search may take longer in large workspaces with many files
 
-## Release Notes
+## 📝 Release Notes
+
+### 0.0.4
+- ✨ Added previous occurrence shortcut (Alt+Shift+F) to navigate backwards through occurrences
+
+### 0.0.3
+- 🔧 Updated VS Code engine compatibility to 1.95.0
+
+### 0.0.2
+- 🔧 Updated VS Code engine compatibility to 1.60.0
 
 ### 0.0.1
+- 🚀 Initial release
+- 🔍 Basic functionality to navigate through occurrences across files
 
-- Initial release of Next Occurrence Across Workspace
-- Basic functionality to navigate through occurrences across files
+---
+
+**Enjoy!** 💻 If you find this extension helpful, please consider leaving a review or star on [GitHub](https://github.com/CharlonTank/next-occurrence-across-workspace).
 
 ## Following extension guidelines
 
@@ -68,5 +108,3 @@ You can author your README using Visual Studio Code. Here are some useful editor
 
 * [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**

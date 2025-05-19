@@ -2,7 +2,7 @@
   "name": "next-occurence-across-workspace",
   "displayName": "Next Occurrence Across Workspace",
   "description": "Jump to the next occurrence of selected text across your workspace",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "charlontank",
   "repository": {
     "type": "git",
@@ -21,6 +21,10 @@
       {
         "command": "next-occurence-across-workspace.findNextOccurrence",
         "title": "Find Next Occurrence Across Workspace"
+      },
+      {
+        "command": "next-occurence-across-workspace.findPreviousOccurrence",
+        "title": "Find Previous Occurrence Across Workspace"
       }
     ],
     "keybindings": [
@@ -28,6 +32,12 @@
         "command": "next-occurence-across-workspace.findNextOccurrence",
         "key": "alt+f",
         "mac": "alt+f",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "next-occurence-across-workspace.findPreviousOccurrence",
+        "key": "alt+shift+f",
+        "mac": "alt+shift+f",
         "when": "editorTextFocus"
       }
     ]
