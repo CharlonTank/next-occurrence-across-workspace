@@ -43,7 +43,31 @@
         "mac": "alt+shift+f",
         "when": "editorTextFocus"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Next Occurrence Across Workspace",
+      "properties": {
+        "nextOccurenceAcrossWorkspace.excludePatterns": {
+          "type": "array",
+          "default": [
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/out/**",
+            "**/.git/**",
+            "**/bower_components/**",
+            "**/build/**",
+            "**/.next/**",
+            "**/.vscode/**"
+          ],
+          "description": "Glob patterns for directories to exclude from search."
+        },
+        "nextOccurenceAcrossWorkspace.includeHiddenFiles": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to include hidden files in search."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

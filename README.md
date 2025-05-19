@@ -15,6 +15,8 @@ Ever wanted to jump between all instances of a variable, function, or text patte
 - 🔍 Jump to the **previous occurrence** with `Alt+Shift+F`
 - 📊 See match statistics in the status bar (e.g., "Match 3/12 for 'myFunction'")
 - 🔄 Cycle through occurrences automatically - when you reach the end, it loops back to the beginning
+- ⚙️ Configure directories to exclude from search
+- 🔤 Case-insensitive search across all files
 
 ## 📋 How to Use
 
@@ -32,6 +34,35 @@ Ever wanted to jump between all instances of a variable, function, or text patte
    - Navigate to the next/previous occurrence
 
 4. Keep pressing the shortcuts to navigate through all matches
+
+## ⚙️ Configuration
+
+You can customize the extension's behavior through VS Code settings:
+
+### Exclude Patterns
+
+Specify directories to exclude from search using glob patterns:
+
+```json
+"nextOccurenceAcrossWorkspace.excludePatterns": [
+  "**/node_modules/**",
+  "**/dist/**",
+  "**/out/**",
+  "**/.git/**",
+  "**/bower_components/**",
+  "**/build/**",
+  "**/.next/**",
+  "**/.vscode/**"
+]
+```
+
+### Hidden Files
+
+Control whether to include hidden files in the search:
+
+```json
+"nextOccurenceAcrossWorkspace.includeHiddenFiles": false
+```
 
 ## 🛠️ Requirements
 

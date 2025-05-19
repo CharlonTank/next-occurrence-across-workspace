@@ -33,8 +33,27 @@ export function activate(context: vscode.ExtensionContext) {
 		const escapedText = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 		
 		try {
-			// Find all occurrences using the search API
-			const files = await vscode.workspace.findFiles('**/*', '**/{node_modules,dist,out}/**');
+			// Get exclude patterns from configuration
+			const config = vscode.workspace.getConfiguration('nextOccurenceAcrossWorkspace');
+			const excludePatterns = config.get<string[]>('excludePatterns', [
+				"**/node_modules/**",
+				"**/dist/**",
+				"**/out/**"
+			]);
+			const includeHiddenFiles = config.get<boolean>('includeHiddenFiles', false);
+			
+			// Create the exclude pattern string
+			const excludePattern = `{${excludePatterns.join(',')}}`;
+			
+			// Define include pattern based on whether to include hidden files
+			let includePattern = '**/*';
+			if (!includeHiddenFiles) {
+				// Exclude files and folders starting with a dot
+				includePattern = '**/*[^.]?*';
+			}
+			
+			// Find all occurrences using the search API with configured exclude patterns
+			const files = await vscode.workspace.findFiles(includePattern, excludePattern);
 			
 			// Process each file
 			for (const fileUri of files) {
@@ -64,7 +83,8 @@ export function activate(context: vscode.ExtensionContext) {
 				statusBarItem.text = `$(error) No matches found for "${text}"`;
 				setTimeout(() => statusBarItem.hide(), 3000);
 			} else {
-				statusBarItem.text = `$(search) Found ${results.length} matches for "${text}"`;
+				const excludeCount = excludePatterns.length;
+				statusBarItem.text = `$(search) Found ${results.length} matches for "${text}" (${excludeCount} dirs excluded)`;
 			}
 			
 			return results;
