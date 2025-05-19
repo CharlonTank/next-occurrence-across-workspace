@@ -3,9 +3,10 @@
   "displayName": "Next Occurrence Across Workspace",
   "description": "Jump to the next occurrence of selected text across your workspace",
   "version": "0.0.1",
+  "publisher": "charlontank",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/next-occurrence-across-workspace.git"
+    "url": "https://github.com/CharlonTank/next-occurrence-across-workspace.git"
   },
   "engines": {
     "vscode": "^1.100.0"
