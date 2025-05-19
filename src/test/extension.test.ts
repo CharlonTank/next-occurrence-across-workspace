@@ -37,24 +37,33 @@ suite('Next Occurrence Across Workspace Tests', () => {
 	});
 	
 	// Test case-insensitive search by examining the regex in the code
-	test('Extension uses case-insensitive regex', function() {
+	test('Extension uses case-insensitive features', function() {
 		// Read the extension.ts file
 		const extensionPath = path.join(__dirname, '..', '..', 'src', 'extension.ts');
 		const extensionContent = fs.readFileSync(extensionPath, 'utf8');
 		
-		// Check if the regex uses the 'i' flag for case-insensitivity
+		// Check for case-insensitive features
+		let hasCaseInsensitiveFeatures = false;
+		
+		// 1. Check if the regex uses the 'i' flag for case-insensitivity
 		const regexPattern = /new RegExp\([^)]+,\s*['"]([^'"]*)['"]\)/g;
 		let match;
-		let foundCaseInsensitiveFlag = false;
+		let foundCaseInsensitiveRegex = false;
 		
 		while ((match = regexPattern.exec(extensionContent)) !== null) {
 			const flags = match[1];
 			if (flags.includes('i')) {
-				foundCaseInsensitiveFlag = true;
+				foundCaseInsensitiveRegex = true;
 				break;
 			}
 		}
 		
-		assert.ok(foundCaseInsensitiveFlag, 'Extension should use case-insensitive regex flag');
+		assert.ok(foundCaseInsensitiveRegex, 'Extension should use case-insensitive regex flag');
+		
+		// 2. Check if comparison for search text change uses toLowerCase()
+		const searchTextChangePattern = /newSearchText\.toLowerCase\(\)\s*!==\s*searchText\.toLowerCase\(\)/;
+		const foundCaseInsensitiveComparison = searchTextChangePattern.test(extensionContent);
+		
+		assert.ok(foundCaseInsensitiveComparison, 'Extension should use case-insensitive comparison for search text changes');
 	});
 });

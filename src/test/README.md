@@ -5,7 +5,7 @@ This directory contains tests for the Next Occurrence Across Workspace VS Code e
 ## Tests Included
 
 1. **Extension Activation Test**: Verifies that the extension is present and can be activated.
-2. **Case-insensitive Search Test**: Tests that the extension's code uses case-insensitive regex for searching.
+2. **Case-insensitive Search Test**: Tests that the extension uses case-insensitive features for searching.
 
 ## Running Tests
 
@@ -38,6 +38,7 @@ This test verifies that:
 
 This test examines the extension's source code to verify:
 - The regular expression used for searching includes the 'i' flag for case-insensitivity
+- The comparison for determining if search text has changed uses case-insensitive comparison (toLowerCase)
 
 ## Future Test Improvements
 

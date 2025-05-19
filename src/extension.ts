@@ -112,8 +112,8 @@ export function activate(context: vscode.ExtensionContext) {
 		// Get the selected text
 		const newSearchText = editor.document.getText(selection);
 		
-		// If the search text has changed, reset the search
-		if (newSearchText !== searchText) {
+		// If the search text has changed (case-insensitive comparison), reset the search
+		if (newSearchText.toLowerCase() !== searchText.toLowerCase()) {
 			searchText = newSearchText;
 			currentIndex = -1;
 			
@@ -161,8 +161,8 @@ export function activate(context: vscode.ExtensionContext) {
 		// Get the selected text
 		const newSearchText = editor.document.getText(selection);
 		
-		// If the search text has changed, reset the search
-		if (newSearchText !== searchText) {
+		// If the search text has changed (case-insensitive comparison), reset the search
+		if (newSearchText.toLowerCase() !== searchText.toLowerCase()) {
 			searchText = newSearchText;
 			currentIndex = -1;
 			
