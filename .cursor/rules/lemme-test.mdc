@@ -8,6 +8,6 @@ CRITICAL WORKFLOW REQUIREMENT:
 2. NEVER commit or push without my explicit approval
 3. For testing:
    a. First run: npm run compile
-   b. Then run: code --new-window --extensionDevelopmentPath=$(pwd) ../tmp
+   b. Then run: code --new-window --extensionDevelopmentPath=$(pwd) ../tmp/yo
    <<<<<c. WAIT for my confirmation that it works >>>>> THIS IS THE MOST IMPORTANT
-4. ONLY AFTER I explicitly confirm the test works, proceed with git operations and publication.
+4. ONLY AFTER I explicitly confirm the test works, proceed with Readme modifications, git operations and publication.

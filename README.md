@@ -66,44 +66,23 @@ You can access settings in multiple ways:
 3. Use the command palette: `Next Occurrence Across Workspace: Open Settings`
 4. Go to File > Preferences > Settings and search for "Next Occurrence"
 
-### Exclude Directories
+### Exclude Patterns
 
-The extension automatically excludes common directories that typically contain generated files, dependencies, or other non-source code content:
-
-```json
-"nextOccurenceAcrossWorkspace.excludeDirectories": {
-  "nodeModules": "**/node_modules/**",
-  "dist": "**/dist/**",
-  "out": "**/out/**",
-  "git": "**/.git/**",
-  "bowerComponents": "**/bower_components/**",
-  "build": "**/build/**",
-  "nextjs": "**/.next/**",
-  "vscode": "**/.vscode/**",
-  "elmStuff": "**/elm-stuff/**",
-  "coverage": "**/coverage/**",
-  "target": "**/target/**",
-  "temp": "**/temp/**",
-  "tmp": "**/tmp/**",
-  "cache": "**/.cache/**",
-  "logs": "**/logs/**"
-}
-```
-
-### Exclude Files
-
-You can also exclude specific file types:
+The extension comes with default exclude patterns for common directories and files, but you can fully customize them:
 
 ```json
-"nextOccurenceAcrossWorkspace.excludeFiles": {
-  "packageLock": "**/package-lock.json",
-  "yarnLock": "**/yarn.lock",
-  "vsix": "**/*.vsix",
-  "minJs": "**/*.min.js",
-  "minCss": "**/*.min.css",
-  "map": "**/*.map"
-}
+"nextOccurenceAcrossWorkspace.excludePatterns": [
+  "**/node_modules/**",
+  "**/dist/**",
+  "**/package-lock.json",
+  "**/*.min.js"
+  // Add any glob pattern you want to exclude
+]
 ```
+
+You can add, remove, or modify patterns as needed. The patterns apply to both directories and files.
+
+If you want to restore the default settings, you can click the "Reset Setting" button in the settings UI.
 
 ### Git Integration
 

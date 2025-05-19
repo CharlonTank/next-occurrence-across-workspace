@@ -44,40 +44,19 @@ export function activate(context: vscode.ExtensionContext) {
 			// Get configuration settings
 			const config = vscode.workspace.getConfiguration('nextOccurenceAcrossWorkspace');
 			
-			// Get exclude directories as an object
-			const excludeDirectoriesObj = config.get<Record<string, string>>('excludeDirectories', {
-				nodeModules: "**/node_modules/**",
-				dist: "**/dist/**",
-				out: "**/out/**"
-			});
-			
-			// Get exclude files as an object
-			const excludeFilesObj = config.get<Record<string, string>>('excludeFiles', {
-				packageLock: "**/package-lock.json",
-				yarnLock: "**/yarn.lock",
-				vsix: "**/*.vsix",
-				minJs: "**/*.min.js",
-				minCss: "**/*.min.css",
-				map: "**/*.map"
-			});
-			
-			// Convert exclude directories and files objects to arrays of patterns
-			const excludeDirPatterns = Object.values(excludeDirectoriesObj);
-			const excludeFilePatterns = Object.values(excludeFilesObj);
-			
-			// Combine all exclude patterns
-			const allExcludePatterns = [...excludeDirPatterns, ...excludeFilePatterns];
+			// Get exclude patterns as a simple array
+			const excludePatterns = config.get<string[]>('excludePatterns', []);
 			
 			const includeHiddenFiles = config.get<boolean>('includeHiddenFiles', false);
 			const respectGitignore = config.get<boolean>('respectGitignore', true);
 			
 			// Create the exclude pattern string
-			let excludePattern = `{${allExcludePatterns.join(',')}}`;
+			let excludePattern = `{${excludePatterns.join(',')}}`;
 			
 			// If respectGitignore is enabled, add appropriate exclude pattern
 			if (respectGitignore) {
 				// Add patterns to exclude .gitignore files themselves
-				excludePattern = `{${allExcludePatterns.join(',')},${'**/.gitignore'}}`;
+				excludePattern = `{${excludePatterns.join(',')},${'**/.gitignore'}}`;
 			}
 			
 			// Define include pattern based on whether to include hidden files
@@ -137,10 +116,9 @@ export function activate(context: vscode.ExtensionContext) {
 				statusBarItem.text = `$(error) No matches found for "${text}"`;
 				setTimeout(() => statusBarItem.hide(), 3000);
 			} else {
-				const excludeDirsCount = excludeDirPatterns.length;
-				const excludeFilesCount = excludeFilePatterns.length;
+				const excludeCount = excludePatterns.length;
 				const gitignoreMsg = respectGitignore ? ", respecting .gitignore" : "";
-				statusBarItem.text = `$(search) Found ${results.length} matches for "${text}" (${excludeDirsCount} dirs, ${excludeFilesCount} file types excluded${gitignoreMsg})`;
+				statusBarItem.text = `$(search) Found ${results.length} matches for "${text}" (${excludeCount} patterns excluded${gitignoreMsg})`;
 			}
 			
 			return results;

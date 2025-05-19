@@ -2,7 +2,7 @@
   "name": "next-occurence-across-workspace",
   "displayName": "Next Occurrence Across Workspace",
   "description": "Jump to the next occurrence of selected text across your workspace",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "publisher": "charlontank",
   "icon": "logo.jpg",
   "repository": {
@@ -79,57 +79,36 @@
     "configuration": {
       "title": "Next Occurrence Across Workspace",
       "properties": {
-        "nextOccurenceAcrossWorkspace.excludeDirectories": {
-          "type": "object",
-          "default": {
-            "nodeModules": "**/node_modules/**",
-            "dist": "**/dist/**",
-            "out": "**/out/**",
-            "git": "**/.git/**",
-            "bowerComponents": "**/bower_components/**",
-            "build": "**/build/**",
-            "nextjs": "**/.next/**",
-            "vscode": "**/.vscode/**",
-            "elmStuff": "**/elm-stuff/**",
-            "coverage": "**/coverage/**",
-            "target": "**/target/**",
-            "temp": "**/temp/**",
-            "tmp": "**/tmp/**",
-            "cache": "**/.cache/**",
-            "logs": "**/logs/**"
-          },
-          "description": "Directories to exclude from search.",
+        "nextOccurenceAcrossWorkspace.excludePatterns": {
+          "type": "array",
+          "default": [
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/out/**",
+            "**/.git/**",
+            "**/bower_components/**",
+            "**/build/**",
+            "**/.next/**",
+            "**/.vscode/**",
+            "**/elm-stuff/**",
+            "**/coverage/**",
+            "**/target/**",
+            "**/temp/**",
+            "**/tmp/**",
+            "**/.cache/**",
+            "**/logs/**",
+            "**/package-lock.json",
+            "**/yarn.lock",
+            "**/*.vsix",
+            "**/*.min.js",
+            "**/*.min.css",
+            "**/*.map"
+          ],
+          "description": "Patterns to exclude from search (directories or files).",
           "scope": "window",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "patternProperties": {
-            "^.*$": {
-              "type": "string",
-              "description": "A glob pattern to exclude"
-            }
-          }
-        },
-        "nextOccurenceAcrossWorkspace.excludeFiles": {
-          "type": "object",
-          "default": {
-            "packageLock": "**/package-lock.json",
-            "yarnLock": "**/yarn.lock",
-            "vsix": "**/*.vsix",
-            "minJs": "**/*.min.js",
-            "minCss": "**/*.min.css",
-            "map": "**/*.map"
-          },
-          "description": "Files to exclude from search.",
-          "scope": "window",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "patternProperties": {
-            "^.*$": {
-              "type": "string",
-              "description": "A glob pattern to exclude specific files"
-            }
+          "items": {
+            "type": "string",
+            "description": "A glob pattern to exclude"
           }
         },
         "nextOccurenceAcrossWorkspace.includeHiddenFiles": {
