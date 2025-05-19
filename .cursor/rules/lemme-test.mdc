@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Before publishing a new version, npm run compile then open "../tmp" directory for me to test the extension

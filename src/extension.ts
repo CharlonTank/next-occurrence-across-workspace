@@ -21,41 +21,59 @@ export function activate(context: vscode.ExtensionContext) {
 	let currentIndex = -1;
 	let searchText = '';
 
-	// Helper function to find all occurrences
+	// Helper function to find all occurrences and return them
 	async function findAllOccurrencesInWorkspace(text: string): Promise<OccurrenceLocation[]> {
+		// Show status while searching
+		statusBarItem.text = `$(search) Searching for "${text}"...`;
+		statusBarItem.show();
+		
 		const results: OccurrenceLocation[] = [];
 		
 		// Escape special regex characters
 		const escapedText = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 		
-		// Find all occurrences using the search API
-		const files = await vscode.workspace.findFiles('**/*', '**/{node_modules,dist,out}/**');
-		
-		// Process each file
-		for (const fileUri of files) {
-			try {
-				const document = await vscode.workspace.openTextDocument(fileUri);
-				const text = document.getText();
-				const regex = new RegExp(escapedText, 'g');
-				
-				let match;
-				while ((match = regex.exec(text)) !== null) {
-					const startPos = document.positionAt(match.index);
-					const endPos = document.positionAt(match.index + match[0].length);
-					const range = new vscode.Range(startPos, endPos);
+		try {
+			// Find all occurrences using the search API
+			const files = await vscode.workspace.findFiles('**/*', '**/{node_modules,dist,out}/**');
+			
+			// Process each file
+			for (const fileUri of files) {
+				try {
+					const document = await vscode.workspace.openTextDocument(fileUri);
+					const content = document.getText();
+					const regex = new RegExp(escapedText, 'g');
 					
-					results.push({
-						uri: fileUri,
-						range: range
-					});
+					let match;
+					while ((match = regex.exec(content)) !== null) {
+						const startPos = document.positionAt(match.index);
+						const endPos = document.positionAt(match.index + match[0].length);
+						const range = new vscode.Range(startPos, endPos);
+						
+						results.push({
+							uri: fileUri,
+							range: range
+						});
+					}
+				} catch (error) {
+					// Skip files that can't be read
+					continue;
 				}
-			} catch (error) {
-				// Skip files that can't be read
-				continue;
 			}
+			
+			if (results.length === 0) {
+				statusBarItem.text = `$(error) No matches found for "${text}"`;
+				setTimeout(() => statusBarItem.hide(), 3000);
+			} else {
+				statusBarItem.text = `$(search) Found ${results.length} matches for "${text}"`;
+			}
+			
+			return results;
+		} catch (error) {
+			statusBarItem.text = `$(error) Error searching for "${text}"`;
+			console.error(error);
+			setTimeout(() => statusBarItem.hide(), 3000);
+			throw error;
 		}
-		
-		return results;
 	}
 
 	// Helper function to navigate to a specific occurrence
@@ -98,29 +116,21 @@ export function activate(context: vscode.ExtensionContext) {
 		if (newSearchText !== searchText) {
 			searchText = newSearchText;
 			currentIndex = -1;
-			occurrences = [];
 			
-			// Show status while searching
-			statusBarItem.text = `$(search) Searching for "${searchText}"...`;
-			statusBarItem.show();
-			
-			// Find all occurrences in the workspace
 			try {
+				// Find all occurrences in the workspace
 				occurrences = await findAllOccurrencesInWorkspace(searchText);
 				
 				if (occurrences.length === 0) {
-					statusBarItem.text = `$(error) No matches found for "${searchText}"`;
-					setTimeout(() => statusBarItem.hide(), 3000);
-					return;
+					return; // Error message already shown in findAllOccurrencesInWorkspace
 				}
-				
-				statusBarItem.text = `$(search) Found ${occurrences.length} matches for "${searchText}"`;
 			} catch (error) {
-				statusBarItem.text = `$(error) Error searching for "${searchText}"`;
-				console.error(error);
-				setTimeout(() => statusBarItem.hide(), 3000);
-				return;
+				return; // Error already handled in findAllOccurrencesInWorkspace
 			}
+		}
+		
+		if (occurrences.length === 0) {
+			return; // No occurrences found
 		}
 		
 		// Move to the next occurrence
@@ -154,34 +164,28 @@ export function activate(context: vscode.ExtensionContext) {
 		// If the search text has changed, reset the search
 		if (newSearchText !== searchText) {
 			searchText = newSearchText;
-			currentIndex = 0;
-			occurrences = [];
+			currentIndex = -1;
 			
-			// Show status while searching
-			statusBarItem.text = `$(search) Searching for "${searchText}"...`;
-			statusBarItem.show();
-			
-			// Find all occurrences in the workspace
 			try {
+				// Find all occurrences in the workspace
 				occurrences = await findAllOccurrencesInWorkspace(searchText);
 				
 				if (occurrences.length === 0) {
-					statusBarItem.text = `$(error) No matches found for "${searchText}"`;
-					setTimeout(() => statusBarItem.hide(), 3000);
-					return;
+					return; // Error message already shown in findAllOccurrencesInWorkspace
 				}
 				
-				statusBarItem.text = `$(search) Found ${occurrences.length} matches for "${searchText}"`;
+				// For previous, start at the end
+				currentIndex = occurrences.length - 1;
 			} catch (error) {
-				statusBarItem.text = `$(error) Error searching for "${searchText}"`;
-				console.error(error);
-				setTimeout(() => statusBarItem.hide(), 3000);
-				return;
+				return; // Error already handled in findAllOccurrencesInWorkspace
 			}
+		} else if (occurrences.length === 0) {
+			return; // No occurrences found
+		} else {
+			// Move to the previous occurrence
+			currentIndex = (currentIndex - 1 + occurrences.length) % occurrences.length;
 		}
 		
-		// Move to the previous occurrence
-		currentIndex = (currentIndex - 1 + occurrences.length) % occurrences.length;
 		const occurrence = occurrences[currentIndex];
 		
 		// Update status
@@ -192,6 +196,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	context.subscriptions.push(nextDisposable, prevDisposable);
+	context.subscriptions.push(statusBarItem);
 }
 
 // This method is called when your extension is deactivated

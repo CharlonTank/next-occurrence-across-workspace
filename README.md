@@ -19,6 +19,7 @@ Ever wanted to jump between all instances of a variable, function, or text patte
 ## 📋 How to Use
 
 1. **Select** any text in your editor
+
    ```js
    const myVariable = "Hello World";
    ```
@@ -73,18 +74,11 @@ You can customize these in your keybindings.json file:
 
 ## 📝 Release Notes
 
-### 0.0.4
-- ✨ Added previous occurrence shortcut (Alt+Shift+F) to navigate backwards through occurrences
+### 0.0.6
 
-### 0.0.3
-- 🔧 Updated VS Code engine compatibility to 1.95.0
-
-### 0.0.2
-- 🔧 Updated VS Code engine compatibility to 1.60.0
-
-### 0.0.1
-- 🚀 Initial release
-- 🔍 Basic functionality to navigate through occurrences across files
+- 🐛 Fixed functionality issues with both next and previous occurrence navigation
+- 🔄 Improved search and occurrence tracking
+- 🎨 Added extension logo
 
 ---
 
@@ -94,17 +88,17 @@ You can customize these in your keybindings.json file:
 
 Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+- [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
 ## Working with Markdown
 
 You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
+- Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
+- Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
 
 ## For more information
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
